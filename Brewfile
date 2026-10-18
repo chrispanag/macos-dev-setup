@@ -64,7 +64,7 @@ cask "codex-app"
 cask "cursor"
 cask "ghostty"
 cask "orbstack"
-cask "visual-studio-code"
+cask "zed"
 
 # Productivity
 cask "1password"
