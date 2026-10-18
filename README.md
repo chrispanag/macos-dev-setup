@@ -56,7 +56,7 @@ brew bundle check --file=Brewfile --verbose
 #### Post-install notes
 
 - **postgresql@18 / redis**: Not started automatically. Run `brew services start postgresql@18` and `brew services start redis` if you want them running in the background.
-- **Nerd Fonts**: Select a Nerd Font (e.g. *JetBrainsMono Nerd Font*) in your terminal so `starship` icons render.
+- **Nerd Fonts**: `starship` icons need a Nerd Font in the terminal; the Ghostty config (step 6) already uses *JetBrainsMono Nerd Font*.
 
 ### 5. Set up zsh
 
@@ -85,6 +85,17 @@ rustup default stable
 ```
 
 Open a new terminal to pick everything up.
+
+### 6. Set up Ghostty
+
+[Ghostty](https://ghostty.org) is the terminal (installed by the Brewfile). Link its config:
+
+```sh
+mkdir -p ~/.config/ghostty
+ln -sf ~/Developer/macos-setup/ghostty/config ~/.config/ghostty/config
+```
+
+It uses the *JetBrainsMono Nerd Font* from the Brewfile and the built-in *Catppuccin Mocha* theme. Reload with <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>,</kbd>.
 
 ## Keeping the Brewfile up to date
 
