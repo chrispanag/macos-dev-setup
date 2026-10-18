@@ -39,6 +39,7 @@ brew "fnm"
 brew "pnpm"
 brew "rustup"
 brew "python@3.13"
+brew "uv"
 brew "ruby"
 
 # Databases
