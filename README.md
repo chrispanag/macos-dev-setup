@@ -35,6 +35,14 @@ cd ~/Developer/macos-setup
 
 ### 4. Install packages from the Brewfile
 
+Homebrew ignores formulae from third-party taps until they are trusted. Trust only the ones the Brewfile uses (the Brewfile adds the taps themselves):
+
+```sh
+brew trust --formula bufbuild/buf/buf golangci/tap/golangci-lint
+```
+
+Then install everything:
+
 ```sh
 brew bundle --file=Brewfile
 ```

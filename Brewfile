@@ -26,6 +26,8 @@ brew "bazel-remote"
 brew "go-size-analyzer"
 brew "golang-migrate"
 brew "actionlint"
+brew "bufbuild/buf/buf"
+brew "golangci/tap/golangci-lint"
 brew "protoc-gen-grpc-web"
 brew "namespacelabs/namespace/nsc"
 
