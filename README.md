@@ -38,7 +38,7 @@ cd ~/Developer/macos-setup
 Homebrew ignores formulae from third-party taps until they are trusted. Trust only the ones the Brewfile uses (the Brewfile adds the taps themselves):
 
 ```sh
-brew trust --formula bufbuild/buf/buf golangci/tap/golangci-lint
+brew trust --formula bufbuild/buf/buf golangci/tap/golangci-lint namespacelabs/namespace/nsc
 ```
 
 Then install everything:
@@ -96,7 +96,7 @@ To find anything installed that isn't in the `Brewfile`:
 brew bundle cleanup --file=Brewfile
 ```
 
-This only lists the extras. Add `--force` to actually uninstall them.
+This only lists the extras. Add `--force` to actually uninstall them. `--force` can also reset Homebrew's tap trust list, so re-run the `brew trust` command from step 4 afterwards.
 
 ## Contributing
 
