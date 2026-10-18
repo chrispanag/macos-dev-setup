@@ -61,6 +61,10 @@ alias loc="npx sloc --format cli-table --format-option head --exclude 'build|\.s
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
 
 # --- Plugins & prompt (keep last) -----------------------------------------
+# fzf: Ctrl+R history, Ctrl+T files, Alt+C cd, `**<Tab>` completion.
+# Sourced directly rather than `source <(fzf --zsh)` to avoid a fork.
+source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
+source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
 source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 eval "$(starship init zsh)"
