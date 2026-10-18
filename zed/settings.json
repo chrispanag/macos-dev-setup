@@ -1,0 +1,43 @@
+// Zed settings (symlinked from macos-setup/zed/settings.json)
+//
+// Only non-default settings live here. See all defaults with
+// `zed: open default settings` from the command palette (cmd-shift-p).
+// Docs: https://zed.dev/docs/configuring-zed
+{
+  "base_keymap": "VSCode",
+
+  // --- Fonts: same Nerd Font as Ghostty ---
+  "ui_font_size": 16,
+  "buffer_font_family": "JetBrainsMono Nerd Font Mono",
+  "buffer_font_size": 15,
+  "terminal": {
+    // Needed for starship prompt icons in the built-in terminal
+    "font_family": "JetBrainsMono Nerd Font Mono"
+  },
+
+  // --- Theme: Catppuccin, following the macOS appearance ---
+  "theme": {
+    "mode": "system",
+    "light": "Catppuccin Latte",
+    "dark": "Catppuccin Mocha"
+  },
+
+  "minimap": {
+    "show": "always"
+  },
+
+  // Installed automatically on a fresh machine
+  "auto_install_extensions": {
+    "catppuccin": true,
+    "golangci-lint": true,
+    "html": true,
+    "proto": true
+  },
+
+  // --- AI ---
+  "agent_servers": {
+    "claude-acp": {
+      "type": "registry"
+    }
+  }
+}

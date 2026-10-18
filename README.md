@@ -117,6 +117,15 @@ ln -sf ~/Developer/macos-setup/tmux/tmux.conf ~/.tmux.conf
 
 [tmux-resurrect](https://github.com/tmux-plugins/tmux-resurrect) and [tmux-continuum](https://github.com/tmux-plugins/tmux-continuum) save sessions every 15 minutes and restore them when tmux starts, e.g. after a reboot.
 
+### 9. Set up Zed
+
+Link the [Zed](https://zed.dev) settings, then restart Zed so it installs the extensions listed under `auto_install_extensions` (including the Catppuccin theme):
+
+```sh
+mkdir -p ~/.config/zed
+ln -sf ~/Developer/macos-setup/zed/settings.json ~/.config/zed/settings.json
+```
+
 ## Keeping the Brewfile up to date
 
 After installing or removing something with Homebrew, update the `Brewfile` by hand (it is curated, so avoid overwriting it with `brew bundle dump`).
