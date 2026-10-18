@@ -97,6 +97,16 @@ ln -sf ~/Developer/macos-setup/ghostty/config ~/.config/ghostty/config
 
 It uses the *JetBrainsMono Nerd Font* from the Brewfile and the built-in *Catppuccin Mocha* theme. Reload with <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>,</kbd>.
 
+### 7. Apply macOS settings
+
+[`macos/defaults.sh`](./macos/defaults.sh) sets Dock, Finder, mouse and other system preferences. It is safe to re-run:
+
+```sh
+./macos/defaults.sh
+```
+
+Dock and Finder restart immediately; log out and back in for the rest to take effect.
+
 ## Keeping the Brewfile up to date
 
 After installing or removing something with Homebrew, update the `Brewfile` by hand (it is curated, so avoid overwriting it with `brew bundle dump`).
