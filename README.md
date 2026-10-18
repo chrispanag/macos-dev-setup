@@ -29,7 +29,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 ```sh
 mkdir -p ~/Developer
-git clone https://github.com/<your-user>/macos-setup.git ~/Developer/macos-setup
+git clone https://github.com/chrispanag/macos-dev-setup.git ~/Developer/macos-setup
 cd ~/Developer/macos-setup
 ```
 
