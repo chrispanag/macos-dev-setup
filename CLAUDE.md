@@ -15,6 +15,7 @@ Backup of a personal macOS (Apple Silicon) development setup, published as a **p
 - `zsh/.zprofile` – environment for login shells: `brew shellenv`, `EDITOR`, PATH entries, `fnm env`. Not `.zshenv`, because macOS `path_helper` in `/etc/zprofile` would reorder PATH.
 - `zsh/.zshrc` – interactive-only settings: history, options, completion, keybindings, aliases, plugins, and `starship init` (last). Plain zsh, no Oh My Zsh; plugins come from Homebrew.
 - `ghostty/config` – Ghostty terminal config. Only non-default settings.
+- `tmux/tmux.conf` – tmux config; plugins via tpm from Homebrew (resurrect + continuum).
 - `macos/defaults.sh` – macOS system settings via `defaults write`. Only values that differ from the macOS defaults; idempotent.
 - Config files are symlinked into `~` (see README steps 5 and 6), so editing the repo changes the live setup.
 

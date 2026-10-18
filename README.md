@@ -107,6 +107,16 @@ It uses the *JetBrainsMono Nerd Font* from the Brewfile and the built-in *Catppu
 
 Dock and Finder restart immediately; log out and back in for the rest to take effect.
 
+### 8. Set up tmux
+
+Link the config, then start tmux and press <kbd>prefix</kbd> <kbd>I</kbd> (default prefix: <kbd>Ctrl</kbd>+<kbd>b</kbd>) to install the plugins with [tpm](https://github.com/tmux-plugins/tpm) (installed by the Brewfile):
+
+```sh
+ln -sf ~/Developer/macos-setup/tmux/tmux.conf ~/.tmux.conf
+```
+
+[tmux-resurrect](https://github.com/tmux-plugins/tmux-resurrect) and [tmux-continuum](https://github.com/tmux-plugins/tmux-continuum) save sessions every 15 minutes and restore them when tmux starts, e.g. after a reboot.
+
 ## Keeping the Brewfile up to date
 
 After installing or removing something with Homebrew, update the `Brewfile` by hand (it is curated, so avoid overwriting it with `brew bundle dump`).
