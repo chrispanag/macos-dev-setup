@@ -6,6 +6,8 @@ tap "namespacelabs/namespace"
 # Shell / CLI basics
 brew "git"
 brew "gh"
+brew "bat"
+brew "eza"
 brew "fd"
 brew "fzf"
 brew "jq"

@@ -5,6 +5,7 @@
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export EDITOR=vim
+export BAT_THEME="Catppuccin Mocha"  # matches the Ghostty theme
 
 # Node: fnm's `default` alias (lts-latest), switching on cd into a project
 # with .nvmrc / .node-version.

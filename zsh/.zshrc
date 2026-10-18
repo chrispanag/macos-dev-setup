@@ -42,6 +42,12 @@ bindkey '^[[B' down-line-or-beginning-search
 # --- Aliases ---------------------------------------------------------------
 alias ip="ipconfig getifaddr en0"
 
+# eza instead of ls
+alias ls="eza --group-directories-first"
+alias ll="eza -l --git --icons --group-directories-first"
+alias la="eza -la --git --icons --group-directories-first"
+alias lt="eza --tree --level=2 --icons --git-ignore"
+
 # Config shortcuts
 alias zshconfig='$EDITOR ~/.zshrc'
 alias zshsource="exec zsh"
@@ -66,6 +72,7 @@ alias loc="npx sloc --format cli-table --format-option head --exclude 'build|\.s
 # fd lists files instead of find: faster, and skips .gitignore'd paths.
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:200 {}'"
 export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude .git'
 source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
 source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
