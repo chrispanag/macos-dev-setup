@@ -63,6 +63,10 @@ alias loc="npx sloc --format cli-table --format-option head --exclude 'build|\.s
 # --- Plugins & prompt (keep last) -----------------------------------------
 # fzf: Ctrl+R history, Ctrl+T files, Alt+C cd, `**<Tab>` completion.
 # Sourced directly rather than `source <(fzf --zsh)` to avoid a fork.
+# fd lists files instead of find: faster, and skips .gitignore'd paths.
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
+export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude .git'
 source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
 source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
 source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
