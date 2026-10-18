@@ -47,11 +47,35 @@ brew "redis"
 brew "hugo"
 brew "poppler"
 
-# Casks
-cask "1password-cli"
+# Fonts
 cask "font-hack-nerd-font"
 cask "font-jetbrains-mono-nerd-font"
+
+# Dev apps
+cask "1password-cli"
+cask "claude"
+cask "codex-app"
+cask "cursor"
 cask "ghostty"
 cask "orbstack"
+cask "visual-studio-code"
+
+# Productivity
+cask "1password"
+cask "granola"
+cask "notion"
+cask "obsidian"
+cask "raycast"
 cask "rectangle"
 cask "stats"
+cask "superhuman"
+
+# Browsers & communication
+cask "google-chrome"
+cask "grok-bot"
+cask "signal"
+cask "slack"
+cask "whatsapp"
+
+# Media
+cask "spotify"
