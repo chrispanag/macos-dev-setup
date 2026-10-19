@@ -77,6 +77,13 @@ ln -sf ~/Developer/macos-setup/zsh/.zprofile ~/.zprofile
 
 Anything machine-specific or secret (tokens, work-only settings) goes in `~/.zshrc.local`, which `.zshrc` sources if present. It is never committed.
 
+Link the [Starship](https://starship.rs) prompt config. It's a two-line prompt in Catppuccin Mocha colors that shows the directory, git status, slow command durations and the current `AWS_PROFILE`, in red when it's a prod profile:
+
+```sh
+mkdir -p ~/.config
+ln -sf ~/Developer/macos-setup/starship/starship.toml ~/.config/starship.toml
+```
+
 Finish setting up the language toolchains:
 
 ```sh

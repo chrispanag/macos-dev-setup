@@ -1,0 +1,88 @@
+# Starship prompt (symlinked from macos-setup/starship/starship.toml)
+#
+# Only the modules listed in `format` render; everything else (language
+# versions, package, docker context, ...) stays hidden without needing
+# `disabled = true` for each. Docs: https://starship.rs/config/
+"$schema" = "https://starship.rs/config-schema.json"
+
+command_timeout = 500  # ms; keeps big repos (git status) from stalling the prompt
+palette = "catppuccin_mocha"  # matches Ghostty, Zed and bat
+
+format = """
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+${custom.aws}\
+${custom.aws_prod}\
+$cmd_duration\
+$line_break\
+$character"""
+
+[directory]
+truncate_to_repo = true
+style = "bold lavender"
+
+[git_branch]
+format = "[$symbol$branch]($style) "
+style = "mauve"
+
+[git_status]
+style = "maroon"
+
+[cmd_duration]
+min_time = 2000
+format = "[took $duration]($style) "
+style = "yellow"
+
+[character]
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
+
+# --- AWS profile: peach normally, red on prod ---------------------------------
+# The built-in `aws` module can't style per profile, so two custom modules
+# split on $AWS_PROFILE. Each prints nothing when it doesn't match, and the
+# `(...)` group hides empty output. Cost: one `sh` per module per prompt,
+# run in parallel with the other modules (a few ms).
+[custom.aws]
+when = true
+command = 'case "$AWS_PROFILE" in ""|*prod*) ;; *) printf %s "$AWS_PROFILE" ;; esac'
+shell = ["sh"]
+format = "([\ue7ad $output]($style) )"
+style = "peach"
+
+[custom.aws_prod]
+when = true
+command = 'case "$AWS_PROFILE" in *prod*) printf %s "$AWS_PROFILE" ;; esac'
+shell = ["sh"]
+format = "([\ue7ad $output]($style) )"
+style = "bold red"
+
+# Official Catppuccin Mocha palette: https://github.com/catppuccin/starship
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"
