@@ -28,6 +28,7 @@
 
   // Installed automatically on a fresh machine
   "auto_install_extensions": {
+    "biome": true,
     "catppuccin": true,
     "golangci-lint": true,
     "html": true,
