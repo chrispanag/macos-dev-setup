@@ -26,18 +26,38 @@
     "show": "always"
   },
 
+  // --- Panels: files on the left, agent on the right ---
+  "project_panel": {
+    "dock": "left",
+    "default_width": 240.0,
+    "git_status_indicator": true
+  },
+  "agent": {
+    "dock": "right",
+    "threads_sidebar": {
+      "position": "right"
+    }
+  },
+
   // Installed automatically on a fresh machine
   "auto_install_extensions": {
     "biome": true,
     "catppuccin": true,
     "golangci-lint": true,
     "html": true,
-    "proto": true
+    "proto": true,
+    "starlark": true
   },
 
   // --- AI ---
+  "edit_predictions": {
+    "allow_data_collection": "no"
+  },
   "agent_servers": {
     "claude-acp": {
+      "default_config_options": {
+        "mode": "auto"
+      },
       "type": "registry"
     }
   }
