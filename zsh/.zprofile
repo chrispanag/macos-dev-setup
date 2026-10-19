@@ -6,6 +6,9 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 export HOMEBREW_NO_ENV_HINTS=1  # hide "Adjust how often this is run with..." hints
 
 export EDITOR=vim
+# GUI editor for git commit, crontab -e, etc. EDITOR stays vim as the
+# terminal-only fallback (e.g. over SSH).
+export VISUAL="zed --wait"
 export BAT_THEME="Catppuccin Mocha"  # matches the Ghostty theme
 
 # Node: fnm's `default` alias (lts-latest), switching on cd into a project
