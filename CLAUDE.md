@@ -12,8 +12,8 @@ Backup of a personal macOS (Apple Silicon) development setup, published as a **p
 ## Layout
 
 - `Brewfile` – curated by hand, grouped by category with comments. Never regenerate it with `brew bundle dump`. Verify with `brew bundle check --file=Brewfile --verbose`.
-- `zsh/.zprofile` – environment for login shells: `brew shellenv`, `EDITOR`, PATH entries, `fnm env`. Not `.zshenv`, because macOS `path_helper` in `/etc/zprofile` would reorder PATH.
-- `zsh/.zshrc` – interactive-only settings: history, options, completion, keybindings, aliases, plugins, and `starship init` (last). Plain zsh, no Oh My Zsh; plugins come from Homebrew.
+- `zsh/.zprofile` – environment for login shells: Homebrew env (`brew shellenv` output, inlined), `EDITOR`/`VISUAL`, PATH entries including fnm's default Node. Not `.zshenv`, because macOS `path_helper` in `/etc/zprofile` would reorder PATH.
+- `zsh/.zshrc` – interactive-only settings: history, options, completion, keybindings, aliases, lazy `fnm env` (loads on first `fnm` call or a cd into a Node project), plugins, and the cached `starship init` (last; cache in `~/.cache/zsh`). Plain zsh, no Oh My Zsh; plugins come from Homebrew.
 - `ghostty/config` – Ghostty terminal config. Only non-default settings.
 - `zed/settings.json` – Zed editor settings (JSONC). Extensions go in `auto_install_extensions` so a fresh machine gets them.
 - `tmux/tmux.conf` – tmux config; plugins via tpm from Homebrew (resurrect + continuum).
@@ -23,7 +23,7 @@ Backup of a personal macOS (Apple Silicon) development setup, published as a **p
 ## Conventions
 
 - Node is managed by `fnm` (default = `lts-latest`), not nvm.
-- Shell startup time matters (currently ~60ms without plugins). Avoid adding subprocesses (`$(...)`, `eval`) to startup; prefer zsh builtins and glob qualifiers, and guard optional paths with `(N)`.
+- Shell startup time matters (currently ~35-40ms). Avoid adding subprocesses (`$(...)`, `eval`) to startup; prefer zsh builtins and glob qualifiers, and guard optional paths with `(N)`.
 - Test shell config changes without touching `~`: copy `zsh/` into a scratch dir and run
   `env -i HOME=$HOME TERM=xterm USER=$USER ZDOTDIR=<scratch> zsh -il -c '<check>'`.
   Check syntax with `zsh -n`.

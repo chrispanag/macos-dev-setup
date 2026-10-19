@@ -1,2 +1,3 @@
 .remember/
 .zshrc.local
+.zcompdump*

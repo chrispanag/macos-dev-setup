@@ -8,6 +8,8 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000
 SAVEHIST=50000
 setopt SHARE_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS
+# Show `!!`-style expansions for editing instead of running them; save timestamps.
+setopt HIST_VERIFY EXTENDED_HISTORY
 
 # --- Shell options ---------------------------------------------------------
 setopt AUTO_CD INTERACTIVE_COMMENTS
@@ -40,7 +42,10 @@ bindkey '^[[A' up-line-or-beginning-search
 bindkey '^[[B' down-line-or-beginning-search
 
 # --- Aliases ---------------------------------------------------------------
-alias ip="ipconfig getifaddr en0"
+# Local IP of the interface with the default route (Wi-Fi, Ethernet, ...)
+# (`function ip` rather than `ip()`: re-sourcing this file in a shell that still
+# has the old `ip` alias would otherwise alias-expand it into a parse error.)
+function ip { ipconfig getifaddr "$(route -n get default | awk '/interface:/ {print $2}')" }
 
 # eza instead of ls
 alias ls="eza --group-directories-first"
@@ -63,6 +68,24 @@ alias gita="git add ."
 
 alias loc="npx sloc --format cli-table --format-option head --exclude 'build|\.svg$|\.xml$' ./"
 
+# --- Node (fnm) -----------------------------------------------------------
+# .zprofile puts fnm's default Node on PATH. fnm's own env (a per-shell
+# multishell dir, so it can't be cached) loads on first use: a `fnm` call or
+# a directory fnm reads a version from (same check as fnm's cd hook).
+autoload -Uz add-zsh-hook
+_fnm_init() {
+  unfunction fnm _fnm_init
+  add-zsh-hook -d chpwd _fnm_lazy_chpwd
+  eval "$(command fnm env --use-on-cd --shell zsh)"
+}
+fnm() { _fnm_init && fnm "$@" }
+_fnm_lazy_chpwd() {
+  [[ -f .node-version || -f .nvmrc || -f package.json ]] || return 0
+  _fnm_init && _fnm_autoload_hook
+}
+add-zsh-hook chpwd _fnm_lazy_chpwd
+_fnm_lazy_chpwd  # the shell may start inside a project
+
 # --- Machine-specific / secret settings (not in the repo) -------------------
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
 
@@ -78,4 +101,26 @@ source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
 source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
 source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-eval "$(starship init zsh)"
+# Starship init, cached per installed version (from the Cellar path) and
+# rebuilt when the config changes. PROMPT2 is baked in too: starship's init
+# would otherwise fork `starship prompt --continuation` on every shell.
+() {
+  local bin=$HOMEBREW_PREFIX/bin/starship
+  local cache=${XDG_CACHE_HOME:-$HOME/.cache}/zsh/starship-${${bin:A:h:h}:t}.zsh
+  if [[ ! -s $cache || ~/.config/starship.toml -nt $cache ]]; then
+    # Build in a temp file and rename it into place, so shells starting at once
+    # (e.g. tmux restoring panes) never source a half-written cache, and a
+    # failing starship doesn't leave a broken one behind.
+    local tmp=$cache.$$ old
+    mkdir -p ${cache:h}
+    if { $bin init zsh | grep -v '^PROMPT2=' && (( ! pipestatus[1] )) &&
+         print -r -- "PROMPT2=${(q)$(STARSHIP_SHELL=zsh $bin prompt --continuation)}"
+       } >| $tmp && mv -f $tmp $cache; then
+      old=( ${cache:h}/starship-*.zsh(N) )
+      rm -f ${old:#$cache}
+    else
+      rm -f $tmp
+    fi
+  fi
+  [[ -r $cache ]] && source $cache
+}
