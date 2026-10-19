@@ -3,6 +3,7 @@
 # path_helper after .zshenv and would push system paths ahead of these.
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
+export HOMEBREW_NO_ENV_HINTS=1  # hide "Adjust how often this is run with..." hints
 
 export EDITOR=vim
 export BAT_THEME="Catppuccin Mocha"  # matches the Ghostty theme
