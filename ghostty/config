@@ -43,6 +43,11 @@ quick-terminal-animation-duration = 0.15
 # ssh-env/ssh-terminfo keep TERM usable on remote hosts that don't know xterm-ghostty.
 shell-integration-features = sudo,ssh-env,ssh-terminfo
 
+# --- Project picker ---
+# Shells Ghostty opens start in bin/tmux-project (see zsh/.zshrc); Esc gives a
+# plain shell. Child processes don't inherit it: .zshrc unsets it.
+env = TMUX_PROJECT_AUTOSTART=1
+
 # --- Updates ---
 # Homebrew installs Ghostty; Ghostty keeps itself up to date.
 auto-update = download

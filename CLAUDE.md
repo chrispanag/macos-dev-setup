@@ -17,7 +17,7 @@ Backup of a personal macOS (Apple Silicon) development setup, published as a **p
 - `ghostty/config` – Ghostty terminal config. Only non-default settings.
 - `zed/settings.json` – Zed editor settings (JSONC). Extensions go in `auto_install_extensions` so a fresh machine gets them.
 - `tmux/tmux.conf` – tmux config; plugins via tpm from Homebrew (resurrect + continuum).
-- `bin/` – personal scripts, symlinked into `~/.local/bin` (on PATH). `tmux-project` is the project/session switcher bound to Ctrl+G (zsh) and prefix + j (tmux).
+- `bin/` – personal scripts, symlinked into `~/.local/bin` (on PATH). `tmux-project` is the project/session switcher bound to Ctrl+G (zsh) and prefix + j (tmux), and run by new Ghostty shells (`TMUX_PROJECT_AUTOSTART` from ghostty/config).
 - `macos/defaults.sh` – macOS system settings via `defaults write`. Only values that differ from the macOS defaults; idempotent.
 - `git/config`, `git/ignore` – shared git settings and global gitignore, symlinked into `~/.config/git`. Identity (`user.*`) and machine-specific settings stay in `~/.gitconfig`, which is never committed.
 - `install.sh` – first-time setup following the README steps; idempotent, bash 3.2 compatible (macOS `/bin/bash`), `--check` changes nothing, `--links` only links. A new config file goes in its `LINKS` list, and a new setup step gets a function there. Check with `shellcheck install.sh`.

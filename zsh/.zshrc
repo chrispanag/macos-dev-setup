@@ -143,3 +143,12 @@ _starship_init() {
 _cached_init $HOMEBREW_PREFIX/bin/zoxide "" $HOMEBREW_PREFIX/bin/zoxide init zsh
 _cached_init $HOMEBREW_PREFIX/bin/starship ~/.config/starship.toml _starship_init
 unfunction _cached_init _starship_init
+
+# Shells that Ghostty opens (tabs, windows, splits) start in the project picker
+# (bin/tmux-project); Esc gives a plain shell, and `prefix d` in tmux comes back
+# here. Ghostty sets TMUX_PROJECT_AUTOSTART (ghostty/config); unsetting it keeps
+# nested shells, `exec zsh` and anything started from here out of it.
+if [[ -n ${TMUX_PROJECT_AUTOSTART-} ]]; then
+  unset TMUX_PROJECT_AUTOSTART
+  [[ -z ${TMUX-} ]] && (( $+commands[tmux-project] )) && tmux-project
+fi
