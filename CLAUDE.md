@@ -4,7 +4,7 @@ Backup of a personal macOS (Apple Silicon) development setup, published as a **p
 
 ## Rules
 
-- **No sensitive data, ever.** No secrets, tokens, credentials, hostnames, IPs, employer-specific details, usernames, or absolute paths containing the home directory (use `$HOME` / `~`). Before every commit, scan the staged diff for these. Secrets and machine-specific settings belong in `~/.zshrc.local`, which is gitignored and never committed.
+- **No sensitive data, ever.** No secrets, tokens, credentials, hostnames, IPs, employer-specific details, usernames, or absolute paths containing the home directory (use `$HOME` / `~`). Before every commit, scan the staged diff for these. The gitleaks pre-commit hook (`.githooks/`, rules in `.gitleaks.toml`) catches tokens, keys, emails and home paths automatically, but not hostnames or employer details. Never bypass it with `--no-verify`. Secrets and machine-specific settings belong in `~/.zshrc.local`, which is gitignored and never committed.
 - **Don't touch the live system without asking.** The repo is the source of truth, but changing files in `~` (dotfiles, symlinks), installing/uninstalling packages, or running `brew bundle` needs the user's go-ahead.
 - **Keep the README and `install.sh` in sync.** Every new tool or config file gets a step in the step-by-step install guide in `README.md`, in the order it must run on a fresh Mac, and the matching change in `install.sh`.
 - Use American English in docs and commit messages.

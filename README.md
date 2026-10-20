@@ -195,3 +195,11 @@ This only lists the extras. Add `--force` to actually uninstall them. `--force` 
 ## Contributing
 
 This repository is public. Never commit secrets, tokens, credentials, hostnames, or other personal data.
+
+A pre-commit hook ([`.githooks/pre-commit`](./.githooks/pre-commit)) runs [gitleaks](https://github.com/gitleaks/gitleaks) on every commit. It uses the default rules for tokens and keys, plus the rules in [`.gitleaks.toml`](./.gitleaks.toml) for email addresses and absolute home-directory paths. `install.sh` turns it on; by hand:
+
+```sh
+git config core.hooksPath .githooks
+```
+
+It can't recognize hostnames or employer details, so check the diff for those yourself. For a false positive, adjust `.gitleaks.toml` rather than committing with `--no-verify`.

@@ -194,6 +194,19 @@ links() {
   done
 }
 
+repo_hooks() {
+  step "Secret scan before each commit to this repo"
+  # .githooks/pre-commit runs gitleaks with the rules in .gitleaks.toml.
+  if [[ $(git -C "$REPO" config --get core.hooksPath) == .githooks ]]; then
+    ok "core.hooksPath is .githooks"
+  elif [[ $MODE == check ]]; then
+    warn "Pre-commit hook not enabled (git config core.hooksPath .githooks)"
+  else
+    git -C "$REPO" config core.hooksPath .githooks
+    ok "Enabled the pre-commit hook (core.hooksPath = .githooks)"
+  fi
+}
+
 ssh_agent() {
   step "ssh uses the 1Password agent"
   local config="$HOME/.ssh/config"
@@ -334,6 +347,7 @@ brew_bundle
 zsh_completions
 git_identity
 links
+repo_hooks
 ssh_agent
 toolchains
 tmux_plugins

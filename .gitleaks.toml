@@ -1,0 +1,22 @@
+# gitleaks rules for this public repo, run by .githooks/pre-commit.
+# Default rules (tokens, keys, credentials) plus the repo-specific ones from
+# CLAUDE.md. Hostnames and employer details still need a manual look.
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "home-directory-path"
+description = "Absolute path into a home directory; use ~ or $HOME"
+regex = '''/(?:Users|home)/[A-Za-z0-9._-]+/'''
+
+[[rules]]
+id = "email-address"
+description = "Email address; keep personal and work emails out of the repo"
+regex = '''[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}'''
+[[rules.allowlists]]
+regexTarget = "match"
+regexes = [
+  '''@example\.com$''',
+  '''^git@github\.com$''',
+]
