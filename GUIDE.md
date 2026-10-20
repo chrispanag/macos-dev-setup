@@ -45,6 +45,8 @@ The mouse works: click a pane to focus it, drag a border to resize, scroll for h
 - Middle: the windows. The current one is highlighted, `+` means a pane is zoomed, and a yellow 🔔 means something rang the bell, for example Claude Code waiting for input. Visiting the window clears it.
 - Right: other sessions with a 🔔 window, then the time.
 
+**Ghostty tab titles** follow the active pane: `project · title` when a program sets a title (Claude Code shows its thread name), otherwise just the project.
+
 **After a reboot**, tmux brings back every session, window, split, folder and the text that was on screen. It saves every 15 minutes (<kbd>prefix</kbd> <kbd>Ctrl</kbd>+<kbd>S</kbd> saves now, <kbd>prefix</kbd> <kbd>Ctrl</kbd>+<kbd>R</kbd> restores). Running programs don't come back: restart servers, and use `claude --continue` to resume a Claude Code conversation.
 
 **Avoid** running `tmux` inside tmux; use the picker or <kbd>prefix</kbd> <kbd>s</kbd> to move between sessions. `exit` in the last pane ends the session; <kbd>prefix</kbd> <kbd>d</kbd> keeps it.
@@ -105,7 +107,9 @@ From left to right: the folder (trimmed to the repo), the git branch and status,
 | Keys | What it does |
 |---|---|
 | <kbd>Ctrl</kbd>+<kbd>\`</kbd> | Quick terminal that drops down from the top, from any app. Needs Ghostty in System Settings > Privacy & Security > Accessibility |
+| <kbd>Cmd</kbd>+<kbd>T</kbd> / <kbd>Cmd</kbd>+<kbd>N</kbd> | New tab / window (each opens the project picker) |
 | <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>←</kbd> / <kbd>→</kbd> | Previous / next tab |
+| <kbd>Cmd</kbd>+<kbd>1</kbd>…<kbd>8</kbd> / <kbd>Cmd</kbd>+<kbd>9</kbd> | Go to tab 1–8 / the last tab |
 | <kbd>Cmd</kbd>+<kbd>D</kbd> / <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd> | Split right / down (Ghostty splits; inside tmux, prefer tmux's) |
 | <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd> / <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd> | Zoom a split / make splits equal |
 | <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>,</kbd> | Reload the config |
