@@ -13,7 +13,7 @@ Backup of a personal macOS (Apple Silicon) development setup, published as a **p
 
 - `Brewfile` – curated by hand, grouped by category with comments. Never regenerate it with `brew bundle dump`. Verify with `brew bundle check --file=Brewfile --verbose`.
 - `zsh/.zprofile` – environment for login shells: Homebrew env (`brew shellenv` output, inlined), `EDITOR`/`VISUAL`, PATH entries including fnm's default Node. Not `.zshenv`, because macOS `path_helper` in `/etc/zprofile` would reorder PATH.
-- `zsh/.zshrc` – interactive-only settings: history, options, completion, keybindings, aliases, lazy `fnm env` (loads on first `fnm` call or a cd into a Node project), plugins, and the cached `starship init` (last; cache in `~/.cache/zsh`). Plain zsh, no Oh My Zsh; plugins come from Homebrew.
+- `zsh/.zshrc` – interactive-only settings: history, options, completion, keybindings, aliases, lazy `fnm env` (loads on first `fnm` call or a cd into a Node project), plugins, and the cached `zoxide init` and `starship init` (last; `_cached_init`, cache in `~/.cache/zsh`). Plain zsh, no Oh My Zsh; plugins come from Homebrew.
 - `ghostty/config` – Ghostty terminal config. Only non-default settings.
 - `zed/settings.json` – Zed editor settings (JSONC). Extensions go in `auto_install_extensions` so a fresh machine gets them.
 - `tmux/tmux.conf` – tmux config; plugins via tpm from Homebrew (resurrect + continuum).

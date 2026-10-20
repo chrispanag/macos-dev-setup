@@ -90,6 +90,8 @@ ln -sf ~/Developer/macos-setup/zsh/.zshrc ~/.zshrc
 ln -sf ~/Developer/macos-setup/zsh/.zprofile ~/.zprofile
 ```
 
+[zoxide](https://github.com/ajeetdsouza/zoxide) adds `z`, which jumps to a directory you've visited from part of its name (`z mono` goes to `~/Developer/monorepo`), and `zi`, which picks one with fzf. Plain `cd` is unchanged.
+
 Anything machine-specific or secret (tokens, work-only settings) goes in `~/.zshrc.local`, which `.zshrc` sources if present. It is never committed.
 
 Link the [Starship](https://starship.rs) prompt config. It's a two-line prompt in Catppuccin Mocha colors that shows the directory, git status, slow command durations and the current `AWS_PROFILE`, in red when it's a prod profile:

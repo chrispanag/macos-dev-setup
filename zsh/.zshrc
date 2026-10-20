@@ -101,22 +101,20 @@ source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
 source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
 source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-# Starship init, cached per installed version (from the Cellar path) and
-# rebuilt when the config changes. PROMPT2 is baked in too: starship's init
-# would otherwise fork `starship prompt --continuation` on every shell.
-() {
-  local bin=$HOMEBREW_PREFIX/bin/starship
-  local cache=${XDG_CACHE_HOME:-$HOME/.cache}/zsh/starship-${${bin:A:h:h}:t}.zsh
-  if [[ ! -s $cache || ~/.config/starship.toml -nt $cache ]]; then
-    # Build in a temp file and rename it into place, so shells starting at once
-    # (e.g. tmux restoring panes) never source a half-written cache, and a
-    # failing starship doesn't leave a broken one behind.
+# Source a tool's shell init from ~/.cache/zsh instead of running the tool on
+# every shell start. One cache per installed version (the Cellar dir in the
+# binary's resolved path), rebuilt when <dependency> is newer. Built in a temp
+# file and renamed into place, so shells starting at once (e.g. tmux restoring
+# panes) never source a half-written cache, and a failing tool doesn't leave a
+# broken one behind.
+_cached_init() {  # _cached_init <binary> <dependency or ""> <command...>
+  local bin=$1 dep=$2; shift 2
+  local cache=${XDG_CACHE_HOME:-$HOME/.cache}/zsh/${bin:t}-${${bin:A:h:h}:t}.zsh
+  if [[ ! -s $cache || ( -n $dep && $dep -nt $cache ) ]]; then
     local tmp=$cache.$$ old
     mkdir -p ${cache:h}
-    if { $bin init zsh | grep -v '^PROMPT2=' && (( ! pipestatus[1] )) &&
-         print -r -- "PROMPT2=${(q)$(STARSHIP_SHELL=zsh $bin prompt --continuation)}"
-       } >| $tmp && mv -f $tmp $cache; then
-      old=( ${cache:h}/starship-*.zsh(N) )
+    if "$@" >| $tmp && mv -f $tmp $cache; then
+      old=( ${cache:h}/${bin:t}-*.zsh(N) )
       rm -f ${old:#$cache}
     else
       rm -f $tmp
@@ -124,3 +122,17 @@ source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.z
   fi
   [[ -r $cache ]] && source $cache
 }
+
+# Starship's init with PROMPT2 baked in: the init would otherwise fork
+# `starship prompt --continuation` on every shell.
+_starship_init() {
+  local bin=$HOMEBREW_PREFIX/bin/starship
+  $bin init zsh | grep -v '^PROMPT2=' && (( ! pipestatus[1] )) &&
+    print -r -- "PROMPT2=${(q)$(STARSHIP_SHELL=zsh $bin prompt --continuation)}"
+}
+
+# zoxide: `z <part of a path>` jumps to a frequently used directory, `zi` picks
+# one with fzf. Plain `cd` is unchanged.
+_cached_init $HOMEBREW_PREFIX/bin/zoxide "" $HOMEBREW_PREFIX/bin/zoxide init zsh
+_cached_init $HOMEBREW_PREFIX/bin/starship ~/.config/starship.toml _starship_init
+unfunction _cached_init _starship_init
