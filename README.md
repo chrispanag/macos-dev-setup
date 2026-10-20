@@ -121,7 +121,7 @@ It uses the *JetBrainsMono Nerd Font* from the Brewfile and the built-in *Catppu
 
 ### 7. Apply macOS settings
 
-[`macos/defaults.sh`](./macos/defaults.sh) sets Dock, Finder, mouse and other system preferences. It is safe to re-run:
+[`macos/defaults.sh`](./macos/defaults.sh) sets keyboard, text substitution, Dock, Finder, screenshot, mouse and other system preferences. It is safe to re-run:
 
 ```sh
 ./macos/defaults.sh

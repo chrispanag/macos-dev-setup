@@ -10,6 +10,20 @@ set -euo pipefail
 # Switch between light and dark mode automatically
 defaults write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool true
 
+# --- Keyboard -------------------------------------------------------------
+# Fastest key repeat and shortest delay the System Settings sliders allow
+defaults write NSGlobalDomain KeyRepeat -int 2
+defaults write NSGlobalDomain InitialKeyRepeat -int 15
+# Holding a key repeats it instead of showing the accent picker
+# (accents still work with Option combos, e.g. ⌥e then e)
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+
+# --- Text substitutions (they break pasted code and commands) -------------
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+
 # --- Mouse & trackpad -----------------------------------------------------
 # Mouse tracking speed
 defaults write NSGlobalDomain com.apple.mouse.scaling -float 2
@@ -28,6 +42,26 @@ defaults write com.apple.dock wvous-br-modifier -int 0
 defaults write com.apple.finder NewWindowTarget -string "PfAF"
 # Remove items from the Trash after 30 days
 defaults write com.apple.finder FXRemoveOldTrashItems -bool true
+# Always show file extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+# Path bar and status bar (item count, free space) at the bottom of windows
+defaults write com.apple.finder ShowPathbar -bool true
+defaults write com.apple.finder ShowStatusBar -bool true
+# Search the current folder by default, not the whole Mac
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+# Folders before files when sorting by name
+defaults write com.apple.finder _FXSortFoldersFirst -bool true
+# No warning when changing a file extension
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+# No .DS_Store files on network shares
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+# --- Screenshots ----------------------------------------------------------
+# Save to ~/Pictures/Screenshots instead of the Desktop
+mkdir -p "$HOME/Pictures/Screenshots"
+defaults write com.apple.screencapture location -string "$HOME/Pictures/Screenshots"
+# No drop shadow on window screenshots
+defaults write com.apple.screencapture disable-shadow -bool true
 
 # --- Window tiling --------------------------------------------------------
 # No gaps between tiled windows
@@ -38,5 +72,5 @@ defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false
 defaults write com.apple.ActivityMonitor ShowCategory -int 100
 
 # Apply
-killall Dock Finder 2>/dev/null || true
-echo "Done. Some settings (mouse speed, appearance) apply after logging out."
+killall Dock Finder SystemUIServer 2>/dev/null || true
+echo "Done. Some settings (key repeat, text substitutions, mouse speed, appearance) apply after logging out."
