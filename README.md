@@ -2,6 +2,21 @@
 
 My macOS setup, so a new machine can be brought up quickly and reproducibly.
 
+## Quick start
+
+On a new Mac:
+
+```sh
+xcode-select --install   # git and compilers; wait for the installer to finish
+git clone https://github.com/chrispanag/macos-dev-setup.git ~/Developer/macos-setup
+cd ~/Developer/macos-setup && ./install.sh
+```
+
+[`install.sh`](./install.sh) runs the steps below in order (follow them by hand if you prefer). It skips anything already done, so it's safe to re-run, and backs up existing files before replacing them with links. Along the way it asks for your git name, email and signing key, whether to apply the macOS settings, and walks you through the `gh` login.
+
+- `./install.sh --check` reports what's missing and changes nothing.
+- `./install.sh --links` only recreates the config symlinks.
+
 ## Step-by-step install
 
 ### 1. Install the Xcode Command Line Tools

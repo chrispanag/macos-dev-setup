@@ -6,7 +6,7 @@ Backup of a personal macOS (Apple Silicon) development setup, published as a **p
 
 - **No sensitive data, ever.** No secrets, tokens, credentials, hostnames, IPs, employer-specific details, usernames, or absolute paths containing the home directory (use `$HOME` / `~`). Before every commit, scan the staged diff for these. Secrets and machine-specific settings belong in `~/.zshrc.local`, which is gitignored and never committed.
 - **Don't touch the live system without asking.** The repo is the source of truth, but changing files in `~` (dotfiles, symlinks), installing/uninstalling packages, or running `brew bundle` needs the user's go-ahead.
-- **Keep the README in sync.** Every new tool or config file gets a step in the step-by-step install guide in `README.md`, in the order it must run on a fresh Mac.
+- **Keep the README and `install.sh` in sync.** Every new tool or config file gets a step in the step-by-step install guide in `README.md`, in the order it must run on a fresh Mac, and the matching change in `install.sh`.
 - Use American English in docs and commit messages.
 
 ## Layout
@@ -19,6 +19,7 @@ Backup of a personal macOS (Apple Silicon) development setup, published as a **p
 - `tmux/tmux.conf` – tmux config; plugins via tpm from Homebrew (resurrect + continuum).
 - `macos/defaults.sh` – macOS system settings via `defaults write`. Only values that differ from the macOS defaults; idempotent.
 - `git/config`, `git/ignore` – shared git settings and global gitignore, symlinked into `~/.config/git`. Identity (`user.*`) and machine-specific settings stay in `~/.gitconfig`, which is never committed.
+- `install.sh` – first-time setup following the README steps; idempotent, bash 3.2 compatible (macOS `/bin/bash`), `--check` changes nothing, `--links` only links. A new config file goes in its `LINKS` list, and a new setup step gets a function there. Check with `shellcheck install.sh`.
 - Config files are symlinked into `~` (see the README steps), so editing the repo changes the live setup.
 
 ## Conventions
