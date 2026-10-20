@@ -375,6 +375,8 @@ cat << 'EOF'
   - Ghostty quick terminal (ctrl+`): allow Ghostty under System Settings >
     Privacy & Security > Accessibility.
   - Restart Zed so it installs its extensions.
+  - Claude Code in tmux: set "preferredNotifChannel": "terminal_bell" in
+    ~/.claude/settings.json so a waiting Claude flags its window (🔔).
   - Optional: brew services start postgresql@18 / redis.
   - Log out and back in for the remaining macOS settings to apply.
 EOF

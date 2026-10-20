@@ -139,6 +139,8 @@ Link the config, then start tmux and press <kbd>prefix</kbd> <kbd>I</kbd> (defau
 ln -sf ~/Developer/macos-setup/tmux/tmux.conf ~/.tmux.conf
 ```
 
+The config splits panes with <kbd>prefix</kbd> <kbd>|</kbd> and <kbd>prefix</kbd> <kbd>-</kbd>; new panes and windows open in the current folder, <kbd>prefix</kbd> <kbd>r</kbd> reloads it, and the status bar uses Catppuccin Mocha colors, with the session name turning red while the prefix is pressed. A window that rings the terminal bell turns yellow with a 🔔 until you visit it, and other sessions with such a window are listed on the right. To get that for Claude Code waiting for input or finishing a task, set `"preferredNotifChannel": "terminal_bell"` in `~/.claude/settings.json` (the default sends nothing inside tmux). Pane contents are saved along with the layout, so scrollback comes back after a restore.
+
 Link the project switcher, [`bin/tmux-project`](./bin/tmux-project):
 
 ```sh
