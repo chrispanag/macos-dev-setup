@@ -26,6 +26,11 @@ LINKS=(
   "git/config:.config/git/config"
   "git/ignore:.config/git/ignore"
 )
+# Every script in bin/ goes into ~/.local/bin (on PATH, see zsh/.zprofile).
+for script in "$REPO"/bin/*; do
+  [[ -e $script ]] || continue  # bin/ is empty (no nullglob in bash 3.2)
+  LINKS+=("bin/${script##*/}:.local/bin/${script##*/}")
+done
 
 # --- Output helpers -------------------------------------------------------
 if [[ -t 1 ]]; then

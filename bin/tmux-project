@@ -1,0 +1,46 @@
+#!/usr/bin/env zsh
+# Pick a project with fzf and switch to its tmux session, creating the session
+# (named after the folder, started in it) if the folder has none yet.
+#
+#   tmux-project          pick from zoxide's directories (most used first),
+#                         then the git repos in ~/Developer
+#   tmux-project <dir>    use <dir> directly
+#
+# Bound to Ctrl+G in zsh (runs inline) and prefix + j in tmux (in a popup).
+setopt err_exit no_unset pipe_fail
+
+if (( $# )); then
+  dir=${1:A}
+  [[ -d $dir ]] || { print -u2 "tmux-project: not a directory: $dir"; exit 1; }
+else
+  # zoxide only lists directories that still exist; the glob finds existing
+  # repos. Duplicates go (first, highest-ranked wins). Shown with ~, returned
+  # as full paths. A failing zoxide still leaves the repos to pick from.
+  dirs=( ${(f)"$(zoxide query --list 2> /dev/null || :)"} ~/Developer/*/.git(N:h) )
+  dir=$(for d in ${(u)dirs:#/}; do print -r -- "$d"$'\t'"${(D)d}"; done |
+        fzf --delimiter='\t' --with-nth=2 --accept-nth=1 --prompt='project> ' \
+          --reverse --height=${TMUX_PROJECT_HEIGHT:-50%} \
+          --preview='eza -1 --icons=always --group-directories-first {1}') ||
+    exit 0  # Esc or Ctrl+C: do nothing
+fi
+
+# Reuse the session started in this folder. Otherwise create one named after
+# the folder (tmux names can't contain . or :), adding -2, -3, ... if taken.
+# Sessions as "path<Tab>name" lines; none when no tmux server is running.
+sessions=( ${(f)"$(tmux list-sessions -F '#{session_path}'$'\t''#{session_name}' 2> /dev/null || :)"} )
+name=
+for s in $sessions; do
+  if [[ ${s%%$'\t'*} == "$dir" ]]; then name=${s#*$'\t'}; break; fi
+done
+if [[ -z $name ]]; then
+  names=( ${sessions#*$'\t'} )
+  base=${${${dir:t}//[.:]/_}:-root} name=$base n=1
+  while (( ${names[(Ie)$name]} )); do name=$base-$(( ++n )); done
+  tmux new-session -d -s "$name" -c "$dir"
+fi
+
+if [[ -n ${TMUX:-} ]]; then
+  exec tmux switch-client -t "=$name"
+else
+  exec tmux attach-session -t "=$name"
+fi

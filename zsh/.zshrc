@@ -41,6 +41,13 @@ zle -N down-line-or-beginning-search
 bindkey '^[[A' up-line-or-beginning-search
 bindkey '^[[B' down-line-or-beginning-search
 
+# Ctrl+G: pick a project and switch to its tmux session (bin/tmux-project).
+# Whatever was typed comes back at the next prompt; the leading space keeps the
+# command out of history.
+_tmux_project() { zle push-input; BUFFER=' tmux-project'; zle accept-line }
+zle -N _tmux_project
+bindkey '^G' _tmux_project
+
 # --- Aliases ---------------------------------------------------------------
 # Local IP of the interface with the default route (Wi-Fi, Ethernet, ...)
 # (`function ip` rather than `ip()`: re-sourcing this file in a shell that still

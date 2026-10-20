@@ -139,6 +139,15 @@ Link the config, then start tmux and press <kbd>prefix</kbd> <kbd>I</kbd> (defau
 ln -sf ~/Developer/macos-setup/tmux/tmux.conf ~/.tmux.conf
 ```
 
+Link the project switcher, [`bin/tmux-project`](./bin/tmux-project):
+
+```sh
+mkdir -p ~/.local/bin
+ln -sf ~/Developer/macos-setup/bin/tmux-project ~/.local/bin/tmux-project
+```
+
+Press <kbd>Ctrl</kbd>+<kbd>G</kbd> at a zsh prompt, or <kbd>prefix</kbd> <kbd>j</kbd> in tmux, to pick a project with fzf (your most used directories from zoxide, then the git repos in `~/Developer`). It switches to that project's tmux session, creating it in the project's folder if needed, so each project keeps its own windows and panes.
+
 [tmux-resurrect](https://github.com/tmux-plugins/tmux-resurrect) and [tmux-continuum](https://github.com/tmux-plugins/tmux-continuum) save sessions every 15 minutes and restore them when tmux starts, e.g. after a reboot.
 
 ### 9. Set up Zed
