@@ -18,7 +18,8 @@ Backup of a personal macOS (Apple Silicon) development setup, published as a **p
 - `zed/settings.json` – Zed editor settings (JSONC). Extensions go in `auto_install_extensions` so a fresh machine gets them.
 - `tmux/tmux.conf` – tmux config; plugins via tpm from Homebrew (resurrect + continuum).
 - `macos/defaults.sh` – macOS system settings via `defaults write`. Only values that differ from the macOS defaults; idempotent.
-- Config files are symlinked into `~` (see README steps 5 and 6), so editing the repo changes the live setup.
+- `git/config`, `git/ignore` – shared git settings and global gitignore, symlinked into `~/.config/git`. Identity (`user.*`) and machine-specific settings stay in `~/.gitconfig`, which is never committed.
+- Config files are symlinked into `~` (see the README steps), so editing the repo changes the live setup.
 
 ## Conventions
 

@@ -133,6 +133,38 @@ mkdir -p ~/.config/zed
 ln -sf ~/Developer/macos-setup/zed/settings.json ~/.config/zed/settings.json
 ```
 
+### 10. Set up git
+
+The shared git settings ([`git/config`](./git/config): aliases, [delta](https://github.com/dandavison/delta) as the diff pager, SSH commit signing through 1Password, GitHub over SSH) and the global ignore file go in `~/.config/git`. Your identity goes in `~/.gitconfig`, which git reads afterwards and which stays out of the repo. Create it first, so that `git config --global` keeps writing there and not into the repo:
+
+```sh
+git config --file ~/.gitconfig user.name "Your Name"
+git config --file ~/.gitconfig user.email "you@example.com"
+# Public key of the SSH key in 1Password (Copy > Public Key), used to sign commits
+git config --file ~/.gitconfig user.signingkey "ssh-ed25519 AAAA..."
+
+mkdir -p ~/.config/git
+ln -sf ~/Developer/macos-setup/git/config ~/.config/git/config
+ln -sf ~/Developer/macos-setup/git/ignore ~/.config/git/ignore
+```
+
+In 1Password, turn on **Settings > Developer > Use the SSH agent**, otherwise signing fails. Then point `ssh` at the 1Password agent, otherwise every push to GitHub (rewritten to SSH by `git/config`, including in this repo, which was cloned over HTTPS) fails with `Permission denied (publickey)`. Add this to `~/.ssh/config`:
+
+```
+Host *
+  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+```
+
+Fetches from `https://github.com` remotes stay on HTTPS and authenticate with the `gh` token, so private repos and Go modules keep working even when 1Password is locked. Log in once with `gh auth login`.
+
+Finally, add the same public key to GitHub twice, once as an authentication key and once as a signing key (so commits show as *Verified*):
+
+```sh
+gh auth refresh -s admin:public_key,admin:ssh_signing_key
+gh ssh-key add <(echo "ssh-ed25519 AAAA...") --title "1Password"
+gh ssh-key add <(echo "ssh-ed25519 AAAA...") --title "1Password" --type signing
+```
+
 ## Keeping the Brewfile up to date
 
 After installing or removing something with Homebrew, update the `Brewfile` by hand (it is curated, so avoid overwriting it with `brew bundle dump`).

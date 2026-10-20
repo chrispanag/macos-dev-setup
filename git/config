@@ -1,0 +1,47 @@
+# Git config (symlinked to ~/.config/git/config from macos-setup/git/config)
+#
+# Git reads this file first, then ~/.gitconfig, which holds identity and
+# machine-specific settings (user.name, user.email, user.signingkey,
+# maintenance.repo) and is never committed. As long as ~/.gitconfig exists,
+# `git config --global` writes go there, not into this repo.
+
+[init]
+	defaultBranch = main
+
+# A new branch's first `git push` sets its upstream, no `-u` needed.
+[push]
+	autoSetupRemote = true
+
+[alias]
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+
+# delta for diffs, log -p, show and `add -p`. Colors follow $BAT_THEME
+# (Catppuccin Mocha); `n`/`N` jump between files in the pager.
+[core]
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	line-numbers = true
+	side-by-side = true
+# Conflict markers also show the common ancestor (delta's recommended setting).
+[merge]
+	conflictStyle = zdiff3
+
+# Sign every commit with the SSH key stored in 1Password (user.signingkey
+# lives in ~/.gitconfig).
+[commit]
+	gpgsign = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+
+# GitHub: fetch https:// remotes over HTTPS (works with 1Password locked; the
+# gh token covers private repos and Go modules), push over SSH.
+[url "git@github.com:"]
+	pushInsteadOf = https://github.com/
+[credential "https://github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
