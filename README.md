@@ -2,6 +2,8 @@
 
 My macOS setup, so a new machine can be brought up quickly and reproducibly.
 
+For day-to-day use (keys, the project switcher, tmux, aliases), see [GUIDE.md](./GUIDE.md).
+
 ## Quick start
 
 On a new Mac:
