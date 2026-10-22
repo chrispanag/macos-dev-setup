@@ -2,9 +2,8 @@
 # Pick a project with fzf and switch to its tmux session, creating the session
 # (named after the folder, started in it) if the folder has none yet. Each
 # Ghostty tab gets a session of its own: if the project is already open in
-# another tab, this one gets a separate session with its own windows, named
-# after what you type when asked (<project>-review), or <project>-2 if nothing.
-# A session no tab shows (its tab closed) is reused.
+# another tab, this one gets a separate session with its own windows. A session
+# no tab shows (its tab closed) is reused.
 #
 #   tmux-project          pick from zoxide's directories (most used first),
 #                         then the git repos in ~/Developer
@@ -52,14 +51,13 @@ else
   # If that's taken (the project is open in another tab), ask what this one is
   # for: "review" gives <project>-review; Enter gives <project>-2, -3, ...
   names=( ${sessions##*$'\t'} )
-  base=${${${dir:t}//[.:]/_}:-root} name=$base
+  base=${${${dir:t}//[.:]/_}:-root} name=$base n=1
   if (( ${names[(Ie)$name]} )); then
     read -r "label?$base is already open. Name this session: $base-"
-    label=${label//[[:space:].:]/-}
-    if [[ -n $label ]]; then base=$base-$label name=$base n=1
-    else name=$base-2 n=2; fi
-    while (( ${names[(Ie)$name]} )); do name=$base-$(( ++n )); done
+    label=${label//[[:space:].:]/_}
+    [[ -z $label ]] || base=$base-$label name=$base
   fi
+  while (( ${names[(Ie)$name]} )); do name=$base-$(( ++n )); done
   # Outside tmux, new-session attaches by itself.
   cmd=( new-session ${current:+-d} -s "$name" -c "$dir" )
   [[ -z $current ]] || cmd+=( ';' switch-client $client -t "=$name" )
