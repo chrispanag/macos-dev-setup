@@ -18,7 +18,11 @@ The picker lists the directories you use most (from zoxide), then every git repo
 
 - If the project has no session yet, one is created in the project folder.
 - If it has one, you switch to it, with its windows and running programs as you left them.
-- If it's already open in another Ghostty tab, this tab gets a separate session with its own windows. You're asked for a name: type `review` to get `<project>-review`, or press <kbd>Enter</kbd> for `<project>-2`. Either way, a tab never shows another tab's windows. A session whose tab was closed keeps running and is picked up again the next time you open that project.
+- If it's already open in another Ghostty tab, this tab gets a separate session with its own windows: a tab never shows another tab's windows.
+- A session whose tab was closed keeps running. If it's the only one, opening the project reopens it. Otherwise a second list shows the sessions no tab is using, with their window count and when they were last used:
+  - <kbd>Enter</kbd> on one reopens it (type part of its name to find it).
+  - Type a name that matches none, like `review`, and press <kbd>Enter</kbd> for a new `<project>-review`; `+ new session` gives `<project>-2`.
+  - <kbd>Ctrl</kbd>+<kbd>X</kbd> kills the highlighted session, <kbd>Esc</kbd> cancels.
 
 ## tmux
 
