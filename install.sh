@@ -377,6 +377,8 @@ cat << 'EOF'
   - Restart Zed so it installs its extensions.
   - Claude Code in tmux: set "preferredNotifChannel": "terminal_bell" in
     ~/.claude/settings.json so a waiting Claude flags its window (🔔).
+    For agent teams in tmux splits, also set "teammateMode": "auto" and
+    "env": {"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"} there.
   - Optional: brew services start postgresql@18 / redis.
   - Log out and back in for the remaining macOS settings to apply.
 EOF
