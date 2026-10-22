@@ -18,7 +18,11 @@ The picker lists the directories you use most (from zoxide), then every git repo
 
 - If the project has no session yet, one is created in the project folder.
 - If it has one, you switch to it, with its windows and running programs as you left them.
-- If it's already open in another Ghostty tab, this tab gets `<project>-2`: the same windows, but each tab can show a different one. Closing a tab removes its extra session; the windows stay.
+- If it's already open in another Ghostty tab, this tab gets a separate session with its own windows: a tab never shows another tab's windows.
+- A session whose tab was closed keeps running. If it's the only one, opening the project reopens it. Otherwise a second list shows the sessions no tab is using, with their window count and when they were last used:
+  - <kbd>Enter</kbd> on one reopens it (type part of its name to find it).
+  - Type a name that matches none, like `review`, and press <kbd>Enter</kbd> for a new `<project>-review`; `+ new session` gives `<project>-2`.
+  - <kbd>Ctrl</kbd>+<kbd>X</kbd> kills the highlighted session, <kbd>Esc</kbd> cancels.
 
 ## tmux
 
@@ -120,6 +124,7 @@ The left <kbd>Option</kbd> key works as Alt (word jumps in the shell); the right
 
 - Use <kbd>Shift</kbd>+<kbd>Enter</kbd> for a newline in the prompt. It works inside tmux too.
 - With `"preferredNotifChannel": "terminal_bell"` in `~/.claude/settings.json`, a Claude that's waiting for you shows as a yellow 🔔 in tmux's status bar, in whichever project it's in.
+- **Agent teams** (experimental): with `"env": {"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"}` and `"teammateMode": "auto"` in `~/.claude/settings.json`, ask Claude to start a team and each teammate opens in its own tmux split. Click a pane (or <kbd>prefix</kbd> and an arrow key) to talk to a teammate directly; ask the lead to shut one down. Outside tmux, teammates run inside the main Claude instead: arrow keys pick one, <kbd>Enter</kbd> opens it, <kbd>Esc</kbd> goes back.
 
 ## macOS
 

@@ -33,6 +33,7 @@
     "git_status_indicator": true
   },
   "agent": {
+    "thinking_display": "always_collapsed",
     "dock": "right",
     "threads_sidebar": {
       "position": "right"
