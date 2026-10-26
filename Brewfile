@@ -68,6 +68,7 @@ cask "font-jetbrains-mono-nerd-font"
 # Dev apps
 cask "1password-cli"
 cask "claude"
+cask "claude-code"
 cask "codex-app"
 cask "cursor"
 cask "ghostty"
